@@ -28,13 +28,13 @@ export default defineConfig({
         },
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
-    server: {
-        host: true,
-        hmr: {
-            host: 'localhost'
-        },
-        port: 5173,
-    },
+    // server: {
+    //     host: true,
+    //     hmr: {
+    //         host: 'localhost'
+    //     },
+    //     port: 5173,
+    // },
     esbuild: {
         jsx: 'automatic',
     },

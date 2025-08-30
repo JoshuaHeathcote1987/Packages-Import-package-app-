@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecommerce\Providers;
+namespace Ecommerce\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +21,7 @@ class EcommerceServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // This is where you load your routes and migrations.
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
     }
 }

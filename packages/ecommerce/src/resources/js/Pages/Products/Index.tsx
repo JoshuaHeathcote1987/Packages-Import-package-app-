@@ -5,7 +5,7 @@ export default function Index() {
     return (
         <>
             <Head title="Ecommerce" />
-            <div style={{ padding: '20px' }}>
+            <div style={{ background: 'black' }}>
                 <h1>Welcome to the Ecommerce Module!</h1>
                 <p>This page is served from your modular structure.</p>
             </div>
