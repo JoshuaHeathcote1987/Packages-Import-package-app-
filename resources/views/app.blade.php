@@ -42,10 +42,10 @@
 
     @viteReactRefresh
     @vite([
-        'resources/js/app.tsx',
-        'packages/ecommerce/src/resources/js/app.tsx',
+    'resources/js/app.tsx',
     ])
     @inertiaHead
+    <!-- 'packages/ecommerce/src/resources/js/app.tsx', -->
 </head>
 
 <body class="font-sans antialiased">
