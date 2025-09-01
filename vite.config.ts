@@ -9,8 +9,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css', 
-                'resources/js/app.tsx'
+                'resources/css/app.css',
+                'resources/js/app.tsx', // your main app
+                'packages/ecommerce/src/resources/js/app.tsx', // ✅ build this too
+                // 'packages/ecommerce/src/resources/css/app.css', // If you have CSS
             ],
             ssr: 'resources/js/ssr.tsx',
             refresh: true,
@@ -24,7 +26,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './resources/js'),
-            '@ecommerce': path.resolve(__dirname, './packages/ecommerce/src/resources/js'),
+            '@ecommerce': path.resolve(__dirname, 'packages/ecommerce/src/resources/js'),
         },
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },

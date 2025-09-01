@@ -9,6 +9,6 @@ class EcommerceController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Products/Index');
+        return Inertia::render('ecommerce/index');  // Changed from 'products/index'
     }
 }

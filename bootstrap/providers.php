@@ -2,5 +2,5 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    Ecommerce\App\Providers\EcommerceServiceProvider::class,
+    Ecommerce\App\Providers\AppServiceProvider::class,
 ];

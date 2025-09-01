@@ -30,7 +30,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-	        "Ecommerce\\App\\": "packages/ecommerce/src/App/"
+            "Ecommerce\\App\\": "packages/ecommerce/src/App/"
         }
     },
     "autoload-dev": {
@@ -70,7 +70,10 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [],
+            "providers": [
+                "Packages\\Ecommerce\\Src\\App\\Providers\\EcommerceServiceProvider"
+            ]
         }
     },
     "config": {
