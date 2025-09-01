@@ -42,8 +42,8 @@
 
     @viteReactRefresh
     @vite([
-    'resources/js/app.tsx',
-    'packages/ecommerce/src/resources/js/app.tsx',
+        'resources/js/app.tsx',
+        'packages/ecommerce/src/resources/js/app.tsx',
     ])
     @inertiaHead
 </head>
