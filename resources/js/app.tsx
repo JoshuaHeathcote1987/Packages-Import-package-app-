@@ -7,44 +7,57 @@ import { initializeTheme } from './hooks/use-appearance';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-const ecommercePages = import.meta.glob('@ecommerce/pages/**/*.tsx');
+// 1️⃣ Host app pages
+const hostPages = import.meta.glob('./pages/**/*.tsx');
 
-// The resolve has been edited so that it can accommodate for 
-// other pages that are in the ecommerce package.
-// When a user creates a package, it will have to write the new package here,
-// which is the if statement below.
-const resolve = (name: string) => {
-    console.log(name);
-    if (name.toLowerCase().startsWith('ecommerce/')) {
-        const pageName = name.replace(/^ecommerce\//i, '');
+// 2️⃣ Automatically detect package pages
+// Assumes structure: packages/<name>/src/resources/js/pages/**/*.tsx
+const packagePagesGlob = import.meta.glob('../../packages/*/src/resources/js/pages/**/*.tsx');
 
-        const importPath = Object.keys(ecommercePages).find((key) =>
-            key.endsWith(`${pageName}.tsx`)
-        );
+// Map of packages
+const packages: Record<string, Record<string, () => Promise<any>>> = {};
 
-        if (!importPath) {
-            throw new Error(`Page not found: ${name}`);
-        }
+for (const path in packagePagesGlob) {
+    const match = path.match(/packages\/([^/]+)\/src\/resources\/js\/pages\/(.+)\.tsx$/i);
+    if (!match) continue;
 
-        return ecommercePages[importPath]().then((m: any) => m.default);
+    const [, pkgName, pagePath] = match;
+    const normalizedPath = pagePath.replace(/\\/g, '/').toLowerCase(); // keep subfolders
+
+    if (!packages[pkgName.toLowerCase()]) packages[pkgName.toLowerCase()] = {};
+    packages[pkgName.toLowerCase()][normalizedPath] = packagePagesGlob[path];
+}
+
+
+// 3️⃣ Generic resolver
+const resolve = async (name: string) => {
+    const [pkg, ...rest] = name.split('/');
+    const pagePath = rest.join('/').toLowerCase(); // will be "ecommerce/index"
+
+    if (pkg && packages[pkg.toLowerCase()]) {
+        const pages = packages[pkg.toLowerCase()];
+        if (!pages[pagePath]) throw new Error(`Page not found in package "${pkg}": ${pagePath}`);
+        const mod = await pages[pagePath]();
+        return (mod as { default: any }).default;
     }
 
-    // Host app pages
-    return resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx'));
+    // fallback to host app
+    return resolvePageComponent(`./pages/${name}.tsx`, hostPages);
 };
 
+
+// 4️⃣ React root
+let root: ReturnType<typeof createRoot> | null = null;
+
 createInertiaApp({
-    title: (title) => title ? `${title} - ${appName}` : appName,
+    title: title => title ? `${title} - ${appName}` : appName,
     resolve,
     setup({ el, App, props }) {
-        const root = createRoot(el);
-
+        if (!root) root = createRoot(el);
         root.render(<App {...props} />);
     },
-    progress: {
-        color: '#4B5563',
-    },
+    progress: { color: '#4B5563' },
 });
 
-// This will set light / dark mode on load...
+// 5️⃣ Theme initialization
 initializeTheme();
