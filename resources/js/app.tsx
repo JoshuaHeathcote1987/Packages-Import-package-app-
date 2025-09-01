@@ -9,7 +9,12 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 const ecommercePages = import.meta.glob('@ecommerce/pages/**/*.tsx');
 
+// The resolve has been edited so that it can accommodate for 
+// other pages that are in the ecommerce package.
+// When a user creates a package, it will have to write the new package here,
+// which is the if statement below.
 const resolve = (name: string) => {
+    console.log(name);
     if (name.toLowerCase().startsWith('ecommerce/')) {
         const pageName = name.replace(/^ecommerce\//i, '');
 
@@ -21,7 +26,7 @@ const resolve = (name: string) => {
             throw new Error(`Page not found: ${name}`);
         }
 
-        return ecommercePages[importPath]().then((m) => m.default);
+        return ecommercePages[importPath]().then((m: any) => m.default);
     }
 
     // Host app pages

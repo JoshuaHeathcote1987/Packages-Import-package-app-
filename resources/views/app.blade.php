@@ -45,7 +45,6 @@
     'resources/js/app.tsx',
     ])
     @inertiaHead
-    <!-- 'packages/ecommerce/src/resources/js/app.tsx', -->
 </head>
 
 <body class="font-sans antialiased">
