@@ -27,17 +27,10 @@ export default defineConfig({
         alias: {
             '@': path.resolve(__dirname, './resources/js'),
             '@ecommerce': path.resolve(__dirname, 'packages/ecommerce/src/resources/js'),
-            // '@blog': path.resolve(__dirname, 'packages/blog/src/resources/js'),
+            '@blog': path.resolve(__dirname, 'packages/blog/src/resources/js'),
           },
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
-    // server: {
-    //     host: true,
-    //     hmr: {
-    //         host: 'localhost'
-    //     },
-    //     port: 5173,
-    // },
     esbuild: {
         jsx: 'automatic',
     },
